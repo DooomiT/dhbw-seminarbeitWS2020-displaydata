@@ -12,6 +12,13 @@ app.use(cors());
 
 const measurements = {};
 
+const db_user = process.env.MONGO_USERNAME;
+const db_password = process.env.MONGO_PASSWORD;
+const db_name = process.env.MONGO_DATABASE;
+const db_port = process.env.MONGO_PORT;
+const db_hostname = process.env.MONGO_HOSTNAME; 
+const event_bus_endpoint = process.env.EVENT_BUS_ENDPOINT;
+
 // get request received - print the measurement data to console log and return it to requester
 app.get('/data',(req,res)=> {
     console.log(measurements);
@@ -34,5 +41,6 @@ app.post('/events',(req,res)=> {
 });
 
 app.listen(4001, () => {
+    console.log(db_user, db_password, db_name, db_port, db_hostname, event_bus_endpoint)
     console.log('Listening on 4001');
 });
