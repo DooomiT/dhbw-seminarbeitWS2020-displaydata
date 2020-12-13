@@ -19,6 +19,8 @@ const db_port = process.env.MONGO_PORT;
 const db_hostname = process.env.MONGO_HOSTNAME; 
 const event_bus_endpoint = process.env.EVENT_BUS_ENDPOINT;
 
+// mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]
+const mongo_connection = "mongodb://" + db_user + ":" + db_password + "@" + db_hostname + ":" + db_port;
 // get request received - print the measurement data to console log and return it to requester
 app.get('/data',(req,res)=> {
     console.log(measurements);
@@ -41,6 +43,7 @@ app.post('/events',(req,res)=> {
 });
 
 app.listen(4001, () => {
-    console.log(db_user, db_password, db_name, db_port, db_hostname, event_bus_endpoint)
+    console.log(db_user, db_password, db_name, db_port, db_hostname, event_bus_endpoint);
+    console.log(mongo_connection);
     console.log('Listening on 4001');
 });
