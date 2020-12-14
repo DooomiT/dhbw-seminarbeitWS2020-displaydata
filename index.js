@@ -26,7 +26,7 @@ if (db_user != ""){
 else{
   mongo_uri += "mongodb://" + db_hostname + ":" + db_port;
 }
-const Messurement = require('./MessurementDataModel.js').Messurement;
+const MessurementM = require('./MessurementDataModel.js').MessurementM;
 
 mongoose.connect(mongo_uri, {useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
   console.log("connected to mongo db");
@@ -50,7 +50,7 @@ app.post('/events',(req,res)=> {
   measurements[id] = { id, data };
 
   // save data in database
-  const messurementM = new Messurement({
+  const messurementM = new MessurementM({
     id: id,
     data: data,
   });
