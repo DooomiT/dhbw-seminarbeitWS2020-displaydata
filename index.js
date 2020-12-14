@@ -19,37 +19,37 @@ const db_name = process.env.MONGO_DATABASE;
 const db_port = process.env.MONGO_PORT;
 const db_hostname = process.env.MONGO_HOSTNAME; 
 const event_bus_endpoint = process.env.EVENT_BUS_ENDPOINT;
-mongo_uri  = ""
-if (db_user != ""){
-  mongo_uri += "mongodb://" + db_user + ":" + db_password + "@" + db_hostname + ":" + db_port;
-}
-else{
-  mongo_uri += "mongodb://" + db_hostname + ":" + db_port;
-}
 const MessurementM = require('./MessurementDataModel.js').MessurementM;
-
-mongoose.connect(mongo_uri, {useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
-  console.log("connected to mongo db");
+const mongo_uri = "mongodb://" + db_hostname + ":" + db_port + "/" + db_name;
+mongoose.connect(mongo_uri, {
+  authSource: db_name,
+  user: db_user,
+  pass: db_password, 
+  useCreateIndex: true,
+  useNewUrlParser: true, 
+  useUnifiedTopology: true
 });
+const db = mongoose.connection; 
+
 // get request received - print the measurement data to console log and return it to requester
 app.get('/data',(req,res)=> {
-    console.log(measurements);
-    res.send(measurements);
+  db.on('error', console.error.bind(console, 'connection error:')); 
+  db.once('open', function() { 
+    console.log("connected to database");
+    MessurementM.find()
+      .then((messurementData) => res.status(200).send(messurementData))
+      .catch((err) => res.status(400).send(err));
+  });
 }); 
 
 // post event is received from eventbus - so put the data into memory
 app.post('/events',(req,res)=> {
   const { type, measurementdata } = req.body;
-
-  console.log(type); 
-  console.log(measurementdata);
   const { id, data } = measurementdata;
-  console.log(typeof(data));
-
-  // save data in memory
-  measurements[id] = { id, data };
 
   // save data in database
+  db.on('error', console.error.bind(console, 'connection error:'));
+  console.log("connected to database");
   const messurementM = new MessurementM({
     id: id,
     data: data,
@@ -64,6 +64,5 @@ app.post('/events',(req,res)=> {
 });
 
 app.listen(4001, () => {
-    console.log(db_user, db_password, db_name, db_port, db_hostname, event_bus_endpoint);
     console.log('Listening on 4001');
 });
