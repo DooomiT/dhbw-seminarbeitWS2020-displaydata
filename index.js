@@ -16,14 +16,14 @@ const measurements = {};
 // dynamic endpoints & other values
 const db_user = process.env.MONGO_USERNAME;
 const db_password = process.env.MONGO_PASSWORD;
-var db_name = "co2Ampel"
 var db_hostname = "localhost"
+var db_name = "co2Ampel"
 var db_port = 27017
-if(process.env.MONGO_DATABASE){
-  db_name = process.env.MONGO_DATABASE;
-}
 if(process.env.MONGO_HOSTNAME){
   db_hostname = process.env.MONGO_HOSTNAME;
+}
+if(process.env.MONGO_DATABASE){
+  db_name = process.env.MONGO_DATABASE;
 }
 if(process.env.MONGO_PORT){
   db_port = process.env.MONGO_PORT;

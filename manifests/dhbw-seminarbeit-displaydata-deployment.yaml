@@ -17,40 +17,31 @@ spec:
     spec:
       containers:
       - env:
-        - name: EVENT_BUS_ENDPOINT
-          onfigMapKeyRef:
-              key: EVENT_BUS_ENDPOINT
-              name: env
-        - name: MONGO_HOSTNAME
-          valueFrom:
-            configMapKeyRef:
-              key: MONGODB_INITIAL_PRIMARY_HOST
-              name: env
         - name: MONGO_HOSTNAME
           valueFrom:
             configMapKeyRef:
               key: MONGO_HOSTNAME
-              name: env
-        - name: MONGO_INITDB_DATABASE
-          valueFrom:
-            configMapKeyRef:
-              key: MONGODB_DATABASE
-              name: env
-        - name: MONGO_INITDB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              key: MONGO_INITDB_USERNAME
-              name: env
-        - name: MONGO_INITDB_PASSWORD
-          valueFrom:
-            configMapKeyRef:
-              key: MONGODB_PASSWORD
-              name: env      
+              name: dhbw-seminarbeit-db-env
         - name: MONGO_PORT
           valueFrom:
             configMapKeyRef:
               key: MONGO_PORT
-              name: env
+              name: dhbw-seminarbeit-db-env
+        - name: MONGO_INITDB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: MONGODB_DATABASE
+              name: dhbw-seminarbeit-db-env
+        - name: MONGO_INITDB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: MONGODB_USERNAME
+              name: dhbw-seminarbeit-db-env
+        - name: MONGO_INITDB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: MONGODB_PASSWORD
+              name: dhbw-seminarbeit-db-env      
         image: dhbw-seminarbeit-displaydata
         imagePullPolicy: ""
         name: dhbw-seminarbeit-displaydata
