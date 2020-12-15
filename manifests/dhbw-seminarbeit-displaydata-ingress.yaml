@@ -13,4 +13,4 @@ spec:
           service:
             name: dhbw-seminarbeit-displaydata 
             port:
-              number: 4000
+              number: 4001
