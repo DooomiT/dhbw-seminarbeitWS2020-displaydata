@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dhbw-seminarbeit-displaydata-ingress
+spec:
+  rules:
+  - host: display.co2ampel.example.com
+    http:
+      paths:
+      - path: /data
+        pathType: Prefix
+        backend:
+          service:
+            name: dhbw-seminarbeit-displaydata 
+            port:
+              number: 4000
