@@ -42,7 +42,7 @@ spec:
             configMapKeyRef:
               key: MONGODB_PASSWORD
               name: dhbw-seminarbeit-db-env      
-        image: dhbw-seminarbeit-displaydata
+        image: flo101/dhbw-seminarbeit-displaydata # change that to your repo
         imagePullPolicy: ""
         name: dhbw-seminarbeit-displaydata
         ports:
