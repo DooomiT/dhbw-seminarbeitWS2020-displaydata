@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const MessurementM = require('./MessurementDataModel.js').MessurementM;
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
@@ -15,11 +16,19 @@ const measurements = {};
 // dynamic endpoints & other values
 const db_user = process.env.MONGO_USERNAME;
 const db_password = process.env.MONGO_PASSWORD;
-const db_name = process.env.MONGO_DATABASE;
-const db_port = process.env.MONGO_PORT;
-const db_hostname = process.env.MONGO_HOSTNAME; 
-const event_bus_endpoint = process.env.EVENT_BUS_ENDPOINT;
-const MessurementM = require('./MessurementDataModel.js').MessurementM;
+var db_name = "co2Ampel"
+var db_hostname = "localhost"
+var db_port = 27017
+if(process.env.MONGO_DATABASE){
+  db_name = process.env.MONGO_DATABASE;
+}
+if(process.env.MONGO_HOSTNAME){
+  db_hostname = process.env.MONGO_HOSTNAME;
+}
+if(process.env.MONGO_PORT){
+  db_port = process.env.MONGO_PORT;
+}
+
 const mongo_uri = "mongodb://" + db_hostname + ":" + db_port + "/" + db_name;
 mongoose.connect(mongo_uri, {
   authSource: db_name,
