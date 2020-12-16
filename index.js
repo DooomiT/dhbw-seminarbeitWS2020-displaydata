@@ -43,12 +43,9 @@ const db = mongoose.connection;
 // get request received - print the measurement data to console log and return it to requester
 app.get('/data',(req,res)=> {
   db.on('error', console.error.bind(console, 'connection error:')); 
-  db.once('open', function() { 
-    console.log("connected to database");
-    MessurementM.find()
-      .then((messurementData) => res.status(200).send(messurementData))
-      .catch((err) => res.status(400).send(err));
-  });
+  MessurementM.find()
+    .then((messurementData) => res.status(200).send(messurementData))
+    .catch((err) => res.status(400).send(err));
 }); 
 
 // post event is received from eventbus - so put the data into memory
@@ -73,5 +70,6 @@ app.post('/events',(req,res)=> {
 });
 
 app.listen(4001, () => {
+    console.log(mongo_uri , db_user, db_password);
     console.log('Listening on 4001');
 });

@@ -27,17 +27,17 @@ spec:
             configMapKeyRef:
               key: MONGO_PORT
               name: dhbw-seminarbeit-db-env
-        - name: MONGO_INITDB_DATABASE
+        - name: MONGO_DATABASE
           valueFrom:
             configMapKeyRef:
               key: MONGODB_DATABASE
               name: dhbw-seminarbeit-db-env
-        - name: MONGO_INITDB_USERNAME
+        - name: MONGO_USERNAME
           valueFrom:
             configMapKeyRef:
               key: MONGODB_USERNAME
               name: dhbw-seminarbeit-db-env
-        - name: MONGO_INITDB_PASSWORD
+        - name: MONGO_PASSWORD
           valueFrom:
             configMapKeyRef:
               key: MONGODB_PASSWORD
@@ -48,6 +48,12 @@ spec:
         ports:
         - containerPort: 4001
         resources: {}
+        livenessProbe:
+          httpGet:
+            path: /data
+            port: 4001
+          initialDelaySeconds: 20
+          periodSeconds: 10
       restartPolicy: Always
       serviceAccountName: ""
       volumes: null

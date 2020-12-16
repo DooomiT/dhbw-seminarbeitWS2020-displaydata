@@ -4,7 +4,7 @@ metadata:
   name: dhbw-seminarbeit-displaydata-ingress
 spec:
   rules:
-  - host: display.co2ampel.example.com
+  - host: display.co2ampel.example.internal
     http:
       paths:
       - path: /data
